@@ -13,16 +13,20 @@ def run(playwright: Playwright) -> None:
 
 
     # can set default timeout for all actions
-    page.set_default_timeout(3000) # default is 30 seconds, set to 3 seconds here
+    page.set_default_timeout(3000)
     page.goto("https://symonstorozhenko.wixsite.com/website-1")
-    # page.pause() # allows for debugging
+    #page.pause()
     # page.wait_for_load_state("networkidle") # find alternative to netowrkidle
-    page.wait_for_timeout(500)              # works but should find alternative. only good for debug mode
-    # page.wait_for_selector("data-testid=handle-button", state='visible') # good syntax / doesnt work
+    #page.wait_for_timeout(500)              # works but should find alternative. only good for debug mode
+    page.wait_for_timeout(500)
     page.get_by_test_id("handle-button").click()
-    # page.wait_for_selector("data-testid=signUp.switchToSignUp", state='visible') # good syntax / doesnt work
     page.get_by_test_id("signUp.switchToSignUp").click()
     page.get_by_role("button", name="Log in with Email").click()
+
+    # alternative examples (might be old):
+    # page.get_by_test_id("emailAuth").get_by_role("textbox", name="Email").fill("symon.storozhenko@gmail.com")
+    # page.fill("[data-testid='siteMembers.container'] input[type='email']", "symon.storozhenko@gmail.com")
+    page.fill('input:below(:text("Email"))', "symon.storozhenko@gmail.com")
     page.get_by_test_id("emailAuth").get_by_role("textbox", name="Email").fill("symon.storozhenko@gmail.com")
     page.get_by_test_id("emailAuth").get_by_role("textbox", name="Email").press("Tab")
     page.get_by_role("textbox", name="Password").fill("test123")
